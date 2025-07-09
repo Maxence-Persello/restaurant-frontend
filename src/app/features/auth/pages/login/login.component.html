@@ -1,0 +1,49 @@
+<div class="login-container">
+  <p-card header="Restaurant PoS" subheader="Veuillez vous identifier pour continuer">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="field mb-4">
+        <label for="email" class="block mb-2">Email</label>
+        <input 
+          pInputText 
+          id="email" 
+          formControlName="email" 
+          class="w-full"
+          aria-describedby="email-error"
+        />
+        <small 
+          id="email-error" 
+          class="p-error block" 
+          *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+          Une adresse email valide est requise.
+        </small>
+      </div>
+      <div class="field mb-4">
+        <label for="password" class="block mb-2">Mot de passe</label>
+        <p-password 
+          inputId="password"
+          formControlName="password"
+          [toggleMask]="true"
+          styleClass="w-full"
+          inputStyleClass="w-full"
+          [feedback]="false"
+          aria-describedby="password-error"
+        ></p-password>
+        <small 
+          id="password-error"
+          class="p-error block"
+          *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+          Le mot de passe est requis.
+        </small>
+      </div>
+      <p-button 
+        label="Se Connecter" 
+        icon="pi pi-sign-in" 
+        iconPos="right"
+        styleClass="w-full"
+        type="submit"
+        [loading]="isLoading"
+        [disabled]="loginForm.invalid">
+      </p-button>
+    </form>
+  </p-card>
+</div>
