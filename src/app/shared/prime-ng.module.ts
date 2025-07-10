@@ -3,20 +3,37 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { PasswordModule } from 'primeng/password';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToolbarModule } from 'primeng/toolbar';
+import { AccordionModule } from 'primeng/accordion';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
+import { DialogModule } from 'primeng/dialog';
+
+const PRIMENG_MODULES = [
+  ButtonModule,
+  CardModule,
+  PasswordModule,
+  InputTextModule,
+  ToastModule,
+  ConfirmDialogModule,
+  ToolbarModule,
+  AccordionModule,
+  ProgressSpinnerModule,
+  TableModule,
+  TagModule,
+  DialogModule
+]
 
 @NgModule({
   declarations: [],
   imports: [
-    ButtonModule,
-    CardModule,
-    PasswordModule,
-    InputTextModule
+    ...PRIMENG_MODULES
   ],
   exports: [
-    ButtonModule,
-    CardModule,
-    PasswordModule,
-    InputTextModule
+    ...PRIMENG_MODULES
   ]
 })
 export class PrimeNgModule { }
