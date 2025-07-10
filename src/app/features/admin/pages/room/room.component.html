@@ -1,0 +1,82 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="admin-page">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2>Gestion des Salles et Tables</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <button pButton label="Ajouter une Salle" icon="pi pi-plus" (click)="openNewRoomDialog()"></button>
+    </div>
+  </p-toolbar>
+
+  <div class="card p-mt-3">
+    <p-accordion [value]="0">
+      <!-- Boucle sur chaque salle -->
+      <p-accordion-panel *ngFor="let room of rooms" [value]="room.id" (onOpen)="onRoomExpand(room)">
+        <!-- Header de l'accordéon avec le nom de la salle et les actions -->
+        <p-accordion-header>{{ room.name }}</p-accordion-header>
+
+        <!-- Contenu de l'accordéon : la liste des tables -->
+        <p-accordion-content>
+          <div class="p-mb-2">
+            <p-button label="Ajouter une Table" icon="pi pi-plus" (onClick)="openNewTableDialog(room.id)"></p-button>
+            <p-button label="Modifier la Salle" icon="pi pi-pencil" (onClick)="openEditRoomDialog(room)"></p-button>
+            <p-button label="Supprimer la Salle" icon="pi pi-trash" (onClick)="deleteRoom(room)"></p-button>
+          </div>
+
+          <!-- Affiche un spinner si les tables sont en cours de chargement -->
+          <div *ngIf="loadingTablesForRoomId === room.id; else tablesList" class="p-d-flex p-jc-center">
+            <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="4"></p-progressSpinner>
+          </div>
+
+          <!-- Template pour afficher la liste des tables -->
+          <ng-template #tablesList>
+            <p-table [value]="room.tables || []">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th scope="col">Nom de la Table</th>
+                  <th scope="col">Places</th>
+                  <th scope="col">Statut</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-table>
+                <tr>
+                  <td>{{ table.name }}</td>
+                  <td>{{ table.seats }}</td>
+                  <td>
+                    <p-tag [value]="table.status" [severity]="table.status === 'available' ? 'success' : (table.status === 'occupied' ? 'danger' : 'warning')"></p-tag>
+                  </td>
+                  <td>
+                    <!-- Boutons pour éditer/supprimer la table (à implémenter) -->
+                    <button pButton pRipple type="button" icon="pi pi-pencil" class="p-button-rounded p-button-text"></button>
+                    <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text p-button-danger"></button>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr><td colspan="4">Aucune table trouvée pour cette salle.</td></tr>
+              </ng-template>
+            </p-table>
+          </ng-template>
+        </p-accordion-content>
+      </p-accordion-panel>
+    </p-accordion>
+  </div>
+</div>
+
+<!-- Modale (Dialog) pour créer/modifier une salle -->
+<p-dialog [(visible)]="roomDialogVisible" [modal]="true" header="{{ isEditMode ? 'Modifier la Salle' : 'Créer une Salle' }}" [style]="{width: '450px'}">
+  <form [formGroup]="roomForm" (ngSubmit)="saveRoom()">
+    <div class="field">
+      <label for="name">Nom de la salle</label>
+      <input id="name" type="text" pInputText formControlName="name" class="w-full" />
+    </div>
+  </form>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideRoomDialog()"></button>
+    <button pButton pRipple label="Sauvegarder" icon="pi pi-check" [disabled]="roomForm.invalid" (click)="saveRoom()"></button>
+  </ng-template>
+</p-dialog>
