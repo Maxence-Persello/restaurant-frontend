@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       )
       .subscribe({
         next: () => {
-          this.router.navigate(['/tables']); 
+          this.router.navigate(['/admin']); 
         },
         error: () => {
           this.messageService.add({ 

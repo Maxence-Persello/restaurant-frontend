@@ -31,6 +31,26 @@ export class AuthService {
   login(email: string, password: string): Observable<AuthResponse> {
     const credentials = { email, password };
 
+    // For testing/development purposes only
+    if (!environment.production) {
+      console.warn('Using mock authentication');
+      return new Observable<AuthResponse>(observer => {
+        setTimeout(() => {
+          const mockResponse: AuthResponse = {
+            token: 'fake-jwt-token-for-testing-purposes',
+            user: {
+              id: '1',
+              name: 'Test User',
+              email: email,
+              role: 'admin'
+            }
+          };
+          observer.next(mockResponse);
+          observer.complete();
+        }, 250); // Simulate network delay
+      });
+    }
+
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials)
       .pipe(
         tap(response => {
