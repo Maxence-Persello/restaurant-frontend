@@ -239,7 +239,7 @@ export class RoomComponent implements OnInit {
         this.tableService.deleteTable(table.id).subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Table supprimée avec succès' });
-            this.loadRooms();
+            this.loadTablesForRoomId(this.selectedRoomId!);
           },
           error: () => {
             this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Une erreur est survenue' });
