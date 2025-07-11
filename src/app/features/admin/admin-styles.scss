@@ -1,0 +1,98 @@
+/* Common styles for all admin pages */
+.admin-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.admin-page p-toolbar {
+  margin-bottom: 1rem;
+}
+
+.admin-page .p-toolbar-group-start h2 {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.admin-page .p-toolbar-group-end {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Day section styles for service component */
+.day-section {
+  margin-bottom: 2rem;
+}
+
+.day-header {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Empty state styles */
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Loading state styles */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* Accordion styles for room component */
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Dialog styles */
+.p-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Form styles */
+.p-field {
+  margin-bottom: 1rem;
+}
+
+.p-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.p-error {
+  color: var(--red-500);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .admin-page .p-toolbar-group-start h2 {
+    font-size: 1.25rem;
+  }
+  
+  .admin-page .p-toolbar-group-end {
+    flex-direction: column;
+  }
+  
+  .day-header {
+    font-size: 1.125rem;
+  }
+}

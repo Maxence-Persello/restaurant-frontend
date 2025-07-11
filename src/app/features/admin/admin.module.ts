@@ -5,10 +5,14 @@ import { RoomComponent } from './pages/room/room.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ServiceComponent } from './pages/service/service.component';
+import { AdminLayoutComponent } from './layout/admin-layout.component';
 
 @NgModule({
   declarations: [
-    RoomComponent
+    RoomComponent,
+    ServiceComponent,
+    AdminLayoutComponent
   ],
   imports: [
     AdminRoutingModule,
