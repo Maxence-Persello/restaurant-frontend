@@ -94,7 +94,11 @@ export class RoomComponent implements OnInit {
     operation.subscribe({
       next: () => {
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: `Salle ${this.isEditMode ? 'modifiée' : 'ajoutée'} avec succès` });
-        this.loadRoom(this.selectedRoomId!);
+        if (this.isEditMode) {
+          this.loadRoom(this.selectedRoomId!);
+        } else {
+          this.loadRooms();
+        }
         this.hideRoomDialog();
       },
       error: () => {
