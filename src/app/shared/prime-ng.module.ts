@@ -11,6 +11,10 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { DialogModule } from 'primeng/dialog';
+import { MessageModule } from 'primeng/message';
+import { TooltipModule } from 'primeng/tooltip';
+import { AutoCompleteModule } from 'primeng/autocomplete';
+import { MenubarModule } from 'primeng/menubar';
 
 const PRIMENG_MODULES = [
   ButtonModule,
@@ -24,7 +28,11 @@ const PRIMENG_MODULES = [
   ProgressSpinnerModule,
   TableModule,
   TagModule,
-  DialogModule
+  DialogModule,
+  MessageModule,
+  TooltipModule,
+  AutoCompleteModule,
+  MenubarModule
 ]
 
 @NgModule({
