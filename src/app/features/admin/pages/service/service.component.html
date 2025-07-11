@@ -1,0 +1,168 @@
+<div class="admin-page">
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <h2>Gestion des Services</h2>
+    </div>
+    <div class="p-toolbar-group-end">
+      <button pButton label="Ajouter un Service" icon="pi pi-plus" (click)="openNewServiceDialog()"></button>
+    </div>
+  </p-toolbar>
+
+  <p-card>
+    <!-- Loading spinner -->
+    <div *ngIf="isLoading" class="loading-container">
+      <p-progressSpinner styleClass="w-4rem h-4rem" strokeWidth="4"></p-progressSpinner>
+    </div>
+
+    <!-- Services grouped by day -->
+    <div *ngIf="!isLoading && services.length > 0">
+      <div *ngFor="let day of orderedDays" class="day-section">
+        <h3 class="day-header">{{ day }}</h3>
+        <p-table [value]="servicesByDay[day]" styleClass="p-datatable-sm">
+          <ng-template pTemplate="header">
+            <tr>
+              <th scope="col">Service</th>
+              <th scope="col">Heure de début</th>
+              <th scope="col">Heure de fin</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-service>
+            <tr>
+              <td>{{ service.name }}</td>
+              <td>{{ service.startTime }}</td>
+              <td>{{ service.endTime }}</td>
+              <td>
+                <p-button 
+                  icon="pi pi-pencil" 
+                  [text]="true"
+                  (onClick)="openEditServiceDialog(service)"
+                  pTooltip="Modifier">
+                </p-button>
+                <p-button 
+                  icon="pi pi-trash" 
+                  [text]="true" 
+                  severity="danger"
+                  (onClick)="deleteService(service)"
+                  pTooltip="Supprimer">
+                </p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="!isLoading && services.length === 0" class="empty-state">
+      <p-message severity="info" [text]="'Aucun service configuré. Ajoutez votre premier service.'"></p-message>
+    </div>
+  </p-card>
+</div>
+
+<!-- Service Dialog -->
+<p-dialog 
+  [(visible)]="serviceDialogVisible" 
+  [modal]="true" 
+  [header]="isEditMode ? 'Modifier le Service' : 'Ajouter un Service'" 
+  [style]="{width: '450px'}"
+  [closable]="true">
+  
+  <form [formGroup]="serviceForm" (ngSubmit)="saveService()">
+    <div class="p-fluid p-formgrid p-grid">
+      
+      <!-- Day of Week -->
+      <div class="p-field p-col-12">
+        <label for="dayOfWeek">Jour de la semaine *</label>
+        <p-select 
+          id="dayOfWeek"
+          formControlName="dayOfWeek"
+          [options]="dayOfWeekOptions"
+          placeholder="Sélectionnez un jour"
+          optionLabel="label"
+          optionValue="value">
+        </p-select>
+        <small 
+          class="p-error" 
+          *ngIf="serviceForm.get('dayOfWeek')?.invalid && serviceForm.get('dayOfWeek')?.touched">
+          Le jour de la semaine est requis
+        </small>
+      </div>
+
+      <!-- Service Name -->
+      <div class="p-field p-col-12">
+        <label for="name">Nom du service *</label>
+        <p-autocomplete 
+          id="name"
+          formControlName="name"
+          [suggestions]="filteredServiceNameOptions"
+          [dropdown]="true"
+          [forceSelection]="false"
+          placeholder="Sélectionnez un service"
+          field="label"
+          (completeMethod)="filterServiceName($event)">
+        </p-autocomplete>
+        <small 
+          class="p-error" 
+          *ngIf="serviceForm.get('name')?.invalid && serviceForm.get('name')?.touched">
+          Le nom du service est requis
+        </small>
+      </div>
+
+      <!-- Start Time -->
+      <div class="p-field p-col-6">
+        <label for="startTime">Heure de début *</label>
+        <input 
+          id="startTime"
+          type="time"
+          pInputText
+          formControlName="startTime"
+          class="p-inputtext p-component">
+        <small 
+          class="p-error" 
+          *ngIf="serviceForm.get('startTime')?.invalid && serviceForm.get('startTime')?.touched">
+          L'heure de début est requise
+        </small>
+      </div>
+
+      <!-- End Time -->
+      <div class="p-field p-col-6">
+        <label for="endTime">Heure de fin *</label>
+        <input 
+          id="endTime"
+          type="time"
+          pInputText
+          formControlName="endTime"
+          class="p-inputtext p-component">
+        <small 
+          class="p-error" 
+          *ngIf="serviceForm.get('endTime')?.invalid && serviceForm.get('endTime')?.touched">
+          L'heure de fin est requise
+        </small>
+      </div>
+
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="p-dialog-footer">
+      <button 
+        pButton 
+        type="button" 
+        label="Annuler" 
+        icon="pi pi-times"
+        severity="secondary"
+        [outlined]="true"
+        (click)="hideServiceDialog()">
+      </button>
+      <button 
+        pButton 
+        type="submit" 
+        [label]="isEditMode ? 'Modifier' : 'Ajouter'"
+        icon="pi pi-check"
+        [disabled]="serviceForm.invalid"
+        (click)="saveService()">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
