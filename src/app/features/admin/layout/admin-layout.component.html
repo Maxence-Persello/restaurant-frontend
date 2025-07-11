@@ -1,0 +1,37 @@
+<div class="admin-layout">
+  <!-- Admin Menu Bar -->
+  <p-menubar [model]="menuItems">
+    <ng-template pTemplate="start">
+      <div class="admin-brand">
+        <span class="brand-text">Restaurant Admin</span>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="admin-actions">
+        <p-button 
+          icon="pi pi-user" 
+          [text]="true" 
+          severity="secondary"
+          pTooltip="Profil Admin"
+          (onClick)="showUserMenu($event)">
+        </p-button>
+        <p-button 
+          icon="pi pi-sign-out" 
+          [text]="true" 
+          severity="danger"
+          pTooltip="Déconnexion"
+          (onClick)="logout()">
+        </p-button>
+      </div>
+    </ng-template>
+  </p-menubar>
+
+  <!-- Content Area -->
+  <div class="admin-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<!-- Toast and Dialog for admin layout -->
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

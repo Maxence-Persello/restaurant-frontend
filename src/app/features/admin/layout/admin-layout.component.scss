@@ -1,0 +1,57 @@
+.admin-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.brand-text {
+  margin-left: 0.25rem;
+}
+
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 1rem;
+  background-color: var(--surface-ground);
+}
+
+:host ::ng-deep .p-menubar {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+:host ::ng-deep .p-menubar-root-list > .p-menuitem > .p-menuitem-link {
+  font-weight: 500;
+}
+
+:host ::ng-deep .p-menubar-root-list > .p-menuitem > .p-menuitem-link.router-link-active {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+@media (max-width: 768px) {
+  .admin-brand .brand-text {
+    display: none;
+  }
+  
+  .admin-content {
+    padding: 0.5rem;
+  }
+}
