@@ -86,12 +86,10 @@ export class ServiceComponent implements OnInit {
     this.isEditMode = true;
     this.selectedServiceId = service.id;
     
-    // Find the corresponding option objects for autocomplete
-    const dayOption = this.dayOfWeekOptions.find(option => option.value === service.dayOfWeek);
     const nameOption = this.serviceNameOptions.find(option => option.value === service.name) || { label: service.name, value: service.name };
     
     this.serviceForm.setValue({
-      dayOfWeek: dayOption,
+      dayOfWeek: service.dayOfWeek,
       name: nameOption,
       startTime: service.startTime,
       endTime: service.endTime
