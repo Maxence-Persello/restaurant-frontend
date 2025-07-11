@@ -20,9 +20,9 @@ export class RoomService {
       console.log('Using mock room data in dev environment');
       return new Observable<Room[]>(observer => {
         observer.next([
-          { id: 1, name: 'Main Dining Room', tables: [] },
-          { id: 2, name: 'Terrace', tables: [] },
-          { id: 3, name: 'Private Room', tables: [] }
+          { id: 1, name: 'getRooms 1' },
+          { id: 2, name: 'getRooms 2' },
+          { id: 3, name: 'getRooms 3' }
         ]);
         observer.complete();
       });
@@ -31,13 +31,26 @@ export class RoomService {
     return this.http.get<Room[]>(this.apiUrl);
   }
 
+  getRoom(id: number): Observable<Room> {
+    // In development mode, return mock data
+    if (!environment.production) {
+      console.log('Using mock room data in dev environment');
+      return new Observable<Room>(observer => {
+        observer.next({ id, name: `getRoom ${id}` });
+        observer.complete();
+      });
+    }
+
+    return this.http.get<Room>(`${this.apiUrl}/${id}`);
+  }
+
   createRoom(roomData: {name: string}): Observable<Room> {
 
     // In development mode, return mock data
     if (!environment.production) {
       console.log('Using mock room creation in dev environment');
       return new Observable<Room>(observer => {
-        observer.next({ id: 4, name: roomData.name, tables: [] });
+        observer.next({ id: 4, name: roomData.name });
         observer.complete();
       });
     }
@@ -51,7 +64,7 @@ export class RoomService {
     if (!environment.production) {
       console.log('Using mock room update in dev environment');
       return new Observable<Room>(observer => {
-        observer.next({ id, name: roomData.name, tables: [] });
+        observer.next({ id, name: roomData.name });
         observer.complete();
       });
     }
