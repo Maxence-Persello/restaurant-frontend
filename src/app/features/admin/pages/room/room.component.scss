@@ -1,0 +1,14 @@
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+// Styles pour que le dialog du layout editor prenne toute la hauteur
+:host ::ng-deep .p-dialog.layout-editor-dialog {
+  .p-dialog-content {
+    padding: 0;
+    height: calc(90vh - 120px); // Hauteur totale moins header et footer
+  }
+}

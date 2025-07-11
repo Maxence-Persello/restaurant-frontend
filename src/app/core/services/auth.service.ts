@@ -46,6 +46,7 @@ export class AuthService {
             }
           };
           observer.next(mockResponse);
+          this.saveToken(mockResponse.token);
           observer.complete();
         }, 250); // Simulate network delay
       });
