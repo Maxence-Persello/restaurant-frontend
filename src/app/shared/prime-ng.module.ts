@@ -15,6 +15,7 @@ import { MessageModule } from 'primeng/message';
 import { TooltipModule } from 'primeng/tooltip';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { MenubarModule } from 'primeng/menubar';
+import { SelectModule } from 'primeng/select';
 
 const PRIMENG_MODULES = [
   ButtonModule,
@@ -32,7 +33,8 @@ const PRIMENG_MODULES = [
   MessageModule,
   TooltipModule,
   AutoCompleteModule,
-  MenubarModule
+  MenubarModule,
+  SelectModule
 ]
 
 @NgModule({
